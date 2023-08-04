@@ -41,7 +41,7 @@ Contribuições são bem-vindas! Sinta-se à vontade para enviar pull requests p
 
 ## Licença
 
-Este projeto está licenciado sob a [Licença MIT](https://github.com/tiago-mends/pokedex/blob/LICENSE.md/LICENSE.md). Sinta-se livre para usá-lo e modificá-lo de acordo com suas necessidades.
+Este projeto está licenciado sob a [Licença MIT](https://github.com/tiago-mends/pokedex/blob/main/LICENSE.md). Sinta-se livre para usá-lo e modificá-lo de acordo com suas necessidades.
 
 &nbsp;
 &nbsp;
