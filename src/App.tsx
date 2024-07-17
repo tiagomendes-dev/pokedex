@@ -1,74 +1,63 @@
-import axios, { AxiosResponse } from "axios";
-import { SearchIcon } from "lucide-react";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
-import Card from "./components/card";
-import Modal from "./components/modal";
+import PokemonList from "./components/pokemon-list";
+import PokemonModal from "./components/pokemon-modal";
+
+// Definições de tipos
+interface Pokemon {
+  id: number;
+  name: string;
+  url: string;
+  imageUrl: string;
+}
 
 export default function App() {
-  const [pokemons, setPokemons] = useState<AxiosResponse[]>([]);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const fetchPokemons = () => {
-    const pokemonEndpoints = [];
-    for (let i = 1; i < 387; i++) {
-      pokemonEndpoints.push("https://pokeapi.co/api/v2/pokemon/" + i);
-    }
-    axios
-      .all(pokemonEndpoints.map((endpoint) => axios.get(endpoint)))
-      .then((res) => setPokemons(res));
-  };
-
-  const pokemonFilter = (name: string) => {
-    const filteredPokemons = [];
-    if (name == "") fetchPokemons();
-    for (const i in pokemons) {
-      if (pokemons[i].data.name.includes(name)) {
-        filteredPokemons.push(pokemons[i]);
-      }
-      setPokemons(filteredPokemons);
-    }
-  };
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [selectedPokemonUrl, setSelectedPokemonUrl] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
-    fetchPokemons();
+    axios
+      .get("https://pokeapi.co/api/v2/pokemon?limit=386")
+      .then(async (response) => {
+        const results = response.data.results;
+        const pokemonsWithImages = await Promise.all(
+          results.map(async (pokemon: Pokemon) => {
+            const pokemonDetail = await axios.get(pokemon.url);
+            return {
+              id: pokemonDetail.data.id,
+              name: pokemon.name,
+              url: pokemon.url,
+              imageUrl:
+                pokemonDetail.data.sprites.other["official-artwork"]
+                  .front_default,
+            };
+          }),
+        );
+        setPokemons(pokemonsWithImages);
+      });
   }, []);
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const handlePokemonClick = (url: string) => {
+    setSelectedPokemonUrl(url);
   };
 
-  function closeModal() {
-    setIsModalOpen(false);
-  }
+  const closeModal = () => {
+    setSelectedPokemonUrl(null);
+  };
 
   return (
     <div className="m-10">
-      <div className="my-10 flex flex-1 items-center gap-2 rounded-lg bg-zinc-100 px-4 py-2">
-        <SearchIcon className="size-5 text-zinc-400" />
-        <input
-          type="text"
-          className="flex-1 bg-transparent text-lg placeholder-zinc-400 outline-none"
-          placeholder="Busque por um pokémon"
-          onChange={(e) => pokemonFilter(e.target.value)}
+      <PokemonList pokemons={pokemons} onPokemonClick={handlePokemonClick} />
+      {selectedPokemonUrl && (
+        <PokemonModal
+          pokemonUrl={selectedPokemonUrl}
+          isOpen={!!selectedPokemonUrl}
+          onRequestClose={closeModal}
         />
-      </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
-        {pokemons.map((pokemon, key) => (
-          <div key={key} onClick={() => openModal()}>
-            <Card
-              id={pokemon.data.id}
-              image={
-                pokemon.data.sprites.other["official-artwork"].front_default
-              }
-              name={pokemon.data.name}
-            />
-          </div>
-        ))}
-      </div>
-
-      {isModalOpen && <Modal closeModal={closeModal} />}
+      )}
     </div>
   );
 }

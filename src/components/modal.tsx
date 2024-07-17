@@ -7,10 +7,12 @@ interface ModalProps {
 export default function Modal({ closeModal }: ModalProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60">
-      <div className="shadow-shape w-[640px] space-y-5 rounded-xl bg-white px-6 py-5">
+      <div className="w-[640px] space-y-5 rounded-xl bg-white px-6 py-5 shadow-shape">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <h2 className="font-lg font-semibold"></h2>
+            <h2 className="font-lg font-semibold capitalize">
+              {selectedPokemon.name}
+            </h2>
             <button onClick={closeModal}>
               <XIcon />
             </button>
