@@ -15,7 +15,6 @@ export default function Card({ id, image, name }: CardProps) {
           </span>
         </div>
         <h2 className="flex-1 text-center text-lg capitalize">{name}</h2>
-        <div></div>
       </div>
     </div>
   );

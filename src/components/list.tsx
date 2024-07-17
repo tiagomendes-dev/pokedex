@@ -17,6 +17,17 @@ export default function List() {
       .then((res) => setPokemons(res));
   };
 
+  const pokemonFilter = (name: string) => {
+    const filteredPokemons = [];
+    if (name == "") fetchPokemons();
+    for (const i in pokemons) {
+      if (pokemons[i].data.name.includes(name)) {
+        filteredPokemons.push(pokemons[i]);
+      }
+      setPokemons(filteredPokemons);
+    }
+  };
+
   useEffect(() => {
     fetchPokemons();
   }, []);
@@ -29,6 +40,7 @@ export default function List() {
           type="text"
           className="flex-1 bg-transparent text-lg placeholder-zinc-400 outline-none"
           placeholder="Busque por um pokémon"
+          onChange={(e) => pokemonFilter(e.target.value)}
         />
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
