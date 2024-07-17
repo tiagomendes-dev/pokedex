@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import Card from "./card";
@@ -21,16 +22,28 @@ export default function List() {
   }, []);
 
   return (
-    <div className="grid h-full w-full grid-cols-4 gap-4">
-      {pokemons.map((pokemon, key) => (
-        <div key={key}>
-          <Card
-            id={pokemon.data.id}
-            image={pokemon.data.sprites.other.dream_world.front_default}
-            name={pokemon.data.name}
-          />
-        </div>
-      ))}
+    <div className="m-10">
+      <div className="my-10 flex flex-1 items-center gap-2 rounded-lg bg-zinc-100 px-4 py-2">
+        <SearchIcon className="size-5 text-zinc-400" />
+        <input
+          type="text"
+          className="flex-1 bg-transparent text-lg placeholder-zinc-400 outline-none"
+          placeholder="Busque por um pokémon"
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+        {pokemons.map((pokemon, key) => (
+          <div key={key}>
+            <Card
+              id={pokemon.data.id}
+              image={
+                pokemon.data.sprites.other["official-artwork"].front_default
+              }
+              name={pokemon.data.name}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

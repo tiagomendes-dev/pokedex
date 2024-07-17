@@ -1,5 +1,3 @@
-import { ChevronRightIcon } from "lucide-react";
-
 interface CardProps {
   id: number;
   image: string;
@@ -8,19 +6,17 @@ interface CardProps {
 
 export default function Card({ id, image, name }: CardProps) {
   return (
-    <div className="flex cursor-pointer items-center justify-between rounded-xl bg-white p-4 shadow-md transition hover:scale-105 hover:shadow-lg">
-      <div className="flex items-center gap-4">
-        <img src={image} alt="" className="size-20" />
-        <div>
-          <p className="text-sm text-black/60">
+    <div className="cursor-pointer rounded-lg bg-neutral-100 p-4 shadow transition hover:scale-105 hover:shadow-md">
+      <div className="flex items-center">
+        <div className="relative rounded-xl bg-zinc-200 p-4">
+          <img src={image} alt={name} className="size-20" />
+          <span className="absolute bottom-2 left-2 rounded-full bg-zinc-50 px-2 text-xs text-black/60">
             #{id.toString().padStart(3, "0")}
-          </p>
-          <h2 className="line-clamp-1 text-xl font-semibold capitalize">
-            {name}
-          </h2>
+          </span>
         </div>
+        <h2 className="flex-1 text-center text-lg capitalize">{name}</h2>
+        <div></div>
       </div>
-      <ChevronRightIcon size={12} />
     </div>
   );
 }

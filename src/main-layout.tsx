@@ -11,7 +11,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="min-h-[calc(100vh-18.25rem)]">{children}</main>
       <Footer />
     </>
   );
