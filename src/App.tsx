@@ -2,8 +2,8 @@ import List from "./components/list";
 
 export default function App() {
   return (
-    <div className="bg-white rounded-t-3xl py-20">
-      <div className="max-w-6xl mx-auto">
+    <div className="rounded-t-3xl bg-white py-20">
+      <div className="mx-auto max-w-6xl">
         <List />
       </div>
     </div>

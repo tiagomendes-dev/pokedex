@@ -21,7 +21,7 @@ export default function List() {
   }, []);
 
   return (
-    <div className="grid grid-cols-4 gap-4 w-full h-full">
+    <div className="grid h-full w-full grid-cols-4 gap-4">
       {pokemons.map((pokemon, key) => (
         <div key={key}>
           <Card
