@@ -19,7 +19,11 @@ interface PokemonModalProps {
 const statMapping: {
   [key: string]: { name: string; color: string; background: string };
 } = {
-  hp: { name: "HP", color: "rgb(34 197 94)", background: "rgb(220 252 231)" },
+  hp: {
+    name: "HP",
+    color: "rgb(34 197 94)",
+    background: "rgb(220 252 231)",
+  },
   attack: {
     name: "Attack",
     color: "rgb(239 68 68)",
