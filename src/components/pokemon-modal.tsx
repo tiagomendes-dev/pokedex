@@ -21,27 +21,27 @@ const statMapping: {
 } = {
   hp: { name: "HP", color: "rgb(34 197 94)", background: "rgb(220 252 231)" },
   attack: {
-    name: "Ataque",
+    name: "Attack",
     color: "rgb(239 68 68)",
     background: "rgb(254 226 226)",
   },
   defense: {
-    name: "Defesa",
+    name: "Defense",
     color: "rgb(59 130 246)",
     background: "rgb(219 234 254)",
   },
   "special-attack": {
-    name: "Ataque Especial",
+    name: "Special Attack",
     color: "rgb(244 63 94)",
     background: "rgb(255 228 230)",
   },
   "special-defense": {
-    name: "Defesa Especial",
+    name: "Special Defense",
     color: "rgb(168 85 247)",
     background: "rgb(243 232 255)",
   },
   speed: {
-    name: "Velocidade",
+    name: "Speed",
     color: "rgb(249 115 22)",
     background: "rgb(255 228 230)",
   },
@@ -94,10 +94,10 @@ const PokemonModal: React.FC<PokemonModalProps> = ({
             <div className="space-y-6">
               <div className="flex justify-around text-sm text-zinc-400">
                 <div className="flex items-center gap-2">
-                  <p>Altura:</p> <span>{pokemon.height / 10} m</span>
+                  <p>Height:</p> <span>{pokemon.height / 10} m</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <p>Peso:</p> <span>{pokemon.weight / 10} kg</span>
+                  <p>Weight:</p> <span>{pokemon.weight / 10} kg</span>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
