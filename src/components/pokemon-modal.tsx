@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 interface PokemonDetail {
   name: string;
+  description: string;
   height: number;
   weight: number;
   stats: { base_stat: number; stat: { name: string } }[];
@@ -55,7 +56,18 @@ const PokemonModal: React.FC<PokemonModalProps> = ({
   useEffect(() => {
     if (pokemonUrl) {
       axios.get(pokemonUrl).then((response) => {
-        setPokemon(response.data);
+        const pokemonData = response.data;
+        axios.get(pokemonData.species.url).then((speciesResponse) => {
+          const speciesData = speciesResponse.data;
+          const descriptionEntry = speciesData.flavor_text_entries.find(
+            (entry: { language: { name: string } }) =>
+              entry.language.name === "en",
+          );
+          const description = descriptionEntry
+            ? descriptionEntry.flavor_text
+            : "No description available.";
+          setPokemon({ ...pokemonData, description });
+        });
       });
     }
   }, [pokemonUrl]);
@@ -75,32 +87,32 @@ const PokemonModal: React.FC<PokemonModalProps> = ({
                 </button>
               </div>
 
-              <p className="text-sm text-zinc-400">
-                Uma semente estranha foi plantada em suas costas ao nascer. A
-                planta brota e cresce com este POKéMON.
-              </p>
+              <p className="text-sm text-zinc-400">{pokemon.description}</p>
             </div>
 
             <div className="h-px w-full bg-zinc-100" />
             <div className="space-y-6">
               <div className="flex justify-around text-sm text-zinc-400">
                 <div className="flex items-center gap-2">
-                  <p>Altura:</p> <span>{pokemon.height}</span>
+                  <p>Altura:</p> <span>{pokemon.height / 10} m</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <p>Peso:</p> <span>{pokemon.weight}kg</span>
+                  <p>Peso:</p> <span>{pokemon.weight / 10} kg</span>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
                 {pokemon.stats.map((stat, index) => (
                   <div key={index} className="flex flex-col">
-                    <div
-                      className="h-2 w-full rounded-full"
-                      style={{
-                        backgroundColor:
-                          statMapping[stat.stat.name]?.background || "black",
-                      }}
-                    />
+                    <div className="flex h-2 items-center rounded-full bg-zinc-100 px-[2px]">
+                      <div
+                        style={{
+                          width: `${(stat.base_stat / 255) * 100}%`,
+                          backgroundColor:
+                            statMapping[stat.stat.name]?.color || "black",
+                        }}
+                        className="h-1 rounded-full opacity-50"
+                      />
+                    </div>
                     <div className="flex items-center justify-between gap-2">
                       <p
                         className="text-xs"
@@ -118,16 +130,6 @@ const PokemonModal: React.FC<PokemonModalProps> = ({
             </div>
           </div>
         </div>
-        // <div>
-        //   <h2>{pokemon.name}</h2>
-        //   <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-        //   <ul>
-        //     {pokemon.types.map((type, index) => (
-        //       <li key={index}>{type.type.name}</li>
-        //     ))}
-        //   </ul>
-        //   <button onClick={onRequestClose}>Close</button>
-        // </div>
       )}
     </>
   );
