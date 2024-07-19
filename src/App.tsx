@@ -10,7 +10,6 @@ interface Pokemon {
   id: number;
   name: string;
   url: string;
-  imageUrl: string;
 }
 
 export default function App() {

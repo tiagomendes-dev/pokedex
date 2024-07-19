@@ -5,7 +5,6 @@ interface Pokemon {
   id: number;
   name: string;
   url: string;
-  imageUrl: string;
 }
 
 interface PokemonListProps {
@@ -30,9 +29,9 @@ const PokemonList: React.FC<PokemonListProps> = ({
                   className="size-20"
                 />
 
-                <span className="absolute bottom-2 left-2 rounded-full bg-zinc-50 px-2 text-xs text-black/60">
+                {/* <span className="absolute bottom-2 left-2 rounded-full bg-zinc-50 px-2 text-xs text-black/60">
                   #{pokemon.id.toString().padStart(3, "0")}
-                </span>
+                </span> */}
               </div>
               <h2 className="flex-1 text-center text-lg capitalize">
                 {pokemon.name}
