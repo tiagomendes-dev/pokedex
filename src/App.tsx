@@ -31,7 +31,7 @@ export default function App() {
               id: pokemonDetail.data.id,
               name: pokemon.name,
               url: pokemon.url,
-              imageUrl: pokemonDetail.data.sprites.other.showdown.front_default,
+              // imageUrl: pokemonDetail.data.sprites.other.showdown.front_default,
             };
           }),
         );
