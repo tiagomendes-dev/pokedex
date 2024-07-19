@@ -25,7 +25,7 @@ const PokemonList: React.FC<PokemonListProps> = ({
             <div className="flex items-center">
               <div className="relative rounded-xl bg-zinc-200 p-4 transition group-hover:bg-zinc-300">
                 <img
-                  src={pokemon.imageUrl}
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
                   alt={pokemon.name}
                   className="size-20"
                 />
