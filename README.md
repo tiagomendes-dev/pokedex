@@ -1,8 +1,4 @@
-<div>
-  <a href="https://pokedex-liart-one.vercel.app/">Demonstração</a>
-</div>
-
-<h1 align="center" id="top">EasyDelivery</h1>
+<h1 align="center" id="top">Pokedex</h1>
 
 <p align="center">
   <img alt="Github top language" src="https://img.shields.io/github/languages/top/tiagomendes-dev/pokedex?color=56BEB8">
@@ -13,6 +9,14 @@
 
   <img alt="License" src="https://img.shields.io/github/license/tiagomendes-dev/pokedex?color=56BEB8">
 </p>
+
+<!-- Status -->
+
+ <h4 align="center"> 
+	🚧  Pokedex em construção...  🚧
+</h4>
+
+<hr>
 
 <p align="center">
   <a href="#dart-about">Sobre</a> &#xa0; | &#xa0; 
