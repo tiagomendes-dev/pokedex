@@ -13,16 +13,17 @@ interface Pokemon {
 }
 
 export default function App() {
-  const [loading] = useState(true);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [selectedPokemonUrl, setSelectedPokemonUrl] = useState<string | null>(
     null,
   );
 
   useEffect(() => {
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon?limit=386")
-      .then(async (response) => {
+    const fetchPokemonData = async () => {
+      try {
+        const response = await axios.get(
+          "https://pokeapi.co/api/v2/pokemon?limit=386",
+        );
         const results = response.data.results;
         const pokemonsWithImages = await Promise.all(
           results.map(async (pokemon: Pokemon) => {
@@ -32,13 +33,18 @@ export default function App() {
               name: pokemon.name,
               url: pokemon.url,
               imageUrl:
-                pokemonDetail.data.sprites.other["official-artwork"]
+                pokemonDetail.data.sprites?.other?.["official-artwork"]
                   .front_default,
             };
           }),
         );
         setPokemons(pokemonsWithImages);
-      });
+      } catch (error) {
+        console.error("Error fetching pokemon data: ", error);
+      }
+    };
+
+    fetchPokemonData();
   }, []);
 
   const handlePokemonClick = (url: string) => {
@@ -49,13 +55,11 @@ export default function App() {
     setSelectedPokemonUrl(null);
   };
 
-  return loading ? (
+  return (
     <div className="m-10">
-      <p className="text-center">Loading...</p>
-    </div>
-  ) : (
-    <div className="m-10">
-      <PokemonList pokemons={pokemons} onPokemonClick={handlePokemonClick} />
+      {pokemons.length > 0 && (
+        <PokemonList pokemons={pokemons} onPokemonClick={handlePokemonClick} />
+      )}
       {selectedPokemonUrl && (
         <PokemonModal
           pokemonUrl={selectedPokemonUrl}
