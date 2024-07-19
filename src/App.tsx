@@ -13,6 +13,7 @@ interface Pokemon {
 }
 
 export default function App() {
+  const [loading] = useState(true);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [selectedPokemonUrl, setSelectedPokemonUrl] = useState<string | null>(
     null,
@@ -48,7 +49,11 @@ export default function App() {
     setSelectedPokemonUrl(null);
   };
 
-  return (
+  return loading ? (
+    <div className="m-10">
+      <p className="text-center">Loading...</p>
+    </div>
+  ) : (
     <div className="m-10">
       <PokemonList pokemons={pokemons} onPokemonClick={handlePokemonClick} />
       {selectedPokemonUrl && (
