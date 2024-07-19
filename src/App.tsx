@@ -19,24 +19,29 @@ export default function App() {
     null,
   );
 
-  const getPokemons = () => {
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon?limit=386")
-      .then(async (response) => {
-        const results = response.data.results;
-        const pokemonsWithImages = await Promise.all(
-          results.map(async (pokemon: Pokemon) => {
-            const pokemonDetail = await axios.get(pokemon.url);
-            return {
-              id: pokemonDetail.data.id,
-              name: pokemon.name,
-              url: pokemon.url,
-              // imageUrl: pokemonDetail.data.sprites.other.showdown.front_default,
-            };
-          }),
-        );
-        setPokemons(pokemonsWithImages);
-      });
+  const getPokemons = async () => {
+    try {
+      const response = await axios.get(
+        "https://pokeapi.co/api/v2/pokemon?limit=386",
+      );
+      const results = response.data.results;
+      const pokemonsWithImages = await Promise.all(
+        results.map(async (pokemon: Pokemon) => {
+          const pokemonDetail = await axios.get(pokemon.url);
+          return {
+            id: pokemonDetail.data.id,
+            name: pokemon.name,
+            url: pokemon.url,
+            imageUrl:
+              pokemonDetail.data.sprites?.other?.["official-artwork"]
+                ?.front_default || "",
+          };
+        }),
+      );
+      setPokemons(pokemonsWithImages);
+    } catch (error) {
+      console.error("Error fetching pokemons:", error);
+    }
   };
 
   useEffect(() => {
