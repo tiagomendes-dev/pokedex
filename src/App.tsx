@@ -19,11 +19,9 @@ export default function App() {
   );
 
   useEffect(() => {
-    const fetchPokemonData = async () => {
-      try {
-        const response = await axios.get(
-          "https://pokeapi.co/api/v2/pokemon?limit=386",
-        );
+    axios
+      .get("https://pokeapi.co/api/v2/pokemon?limit=386")
+      .then(async (response) => {
         const results = response.data.results;
         const pokemonsWithImages = await Promise.all(
           results.map(async (pokemon: Pokemon) => {
@@ -32,19 +30,12 @@ export default function App() {
               id: pokemonDetail.data.id,
               name: pokemon.name,
               url: pokemon.url,
-              imageUrl:
-                pokemonDetail.data.sprites?.other?.["official-artwork"]
-                  .front_default,
+              imageUrl: pokemonDetail.data.sprites.front_default,
             };
           }),
         );
         setPokemons(pokemonsWithImages);
-      } catch (error) {
-        console.error("Error fetching pokemon data: ", error);
-      }
-    };
-
-    fetchPokemonData();
+      });
   }, []);
 
   const handlePokemonClick = (url: string) => {
@@ -57,9 +48,7 @@ export default function App() {
 
   return (
     <div className="m-10">
-      {pokemons.length > 0 && (
-        <PokemonList pokemons={pokemons} onPokemonClick={handlePokemonClick} />
-      )}
+      <PokemonList pokemons={pokemons} onPokemonClick={handlePokemonClick} />
       {selectedPokemonUrl && (
         <PokemonModal
           pokemonUrl={selectedPokemonUrl}
