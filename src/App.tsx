@@ -1,4 +1,5 @@
 import axios from "axios";
+import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import PokemonList from "./components/pokemon-list";
@@ -18,7 +19,7 @@ export default function App() {
     null,
   );
 
-  useEffect(() => {
+  const getPokemons = () => {
     axios
       .get("https://pokeapi.co/api/v2/pokemon?limit=386")
       .then(async (response) => {
@@ -30,13 +31,31 @@ export default function App() {
               id: pokemonDetail.data.id,
               name: pokemon.name,
               url: pokemon.url,
-              imageUrl: pokemonDetail.data.sprites.other.showdown,
+              imageUrl: pokemonDetail.data.sprites.other.showdown.front_default,
             };
           }),
         );
         setPokemons(pokemonsWithImages);
       });
+  };
+
+  useEffect(() => {
+    getPokemons();
   }, []);
+
+  const pokemonFilter = (name: string) => {
+    const filteredPokemons = [];
+    if (name === "") {
+      getPokemons();
+    }
+    for (const i in pokemons) {
+      if (pokemons[i].name.includes(name)) {
+        filteredPokemons.push(pokemons[i]);
+      }
+    }
+
+    setPokemons(filteredPokemons);
+  };
 
   const handlePokemonClick = (url: string) => {
     setSelectedPokemonUrl(url);
@@ -48,6 +67,15 @@ export default function App() {
 
   return (
     <div className="m-10">
+      <div className="mb-10 flex items-center gap-2 rounded-xl bg-zinc-100 p-2">
+        <SearchIcon className="text-zinc-400" />
+        <input
+          type="text"
+          onChange={(e) => pokemonFilter(e.target.value)}
+          className="w-full bg-transparent text-zinc-600 outline-none placeholder:text-zinc-400"
+          placeholder="Digite o nome do pokémon..."
+        />
+      </div>
       <PokemonList pokemons={pokemons} onPokemonClick={handlePokemonClick} />
       {selectedPokemonUrl && (
         <PokemonModal
