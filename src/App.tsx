@@ -7,7 +7,7 @@ import PokemonModal from "./components/pokemon-modal";
 
 // Definições de tipos
 interface Pokemon {
-  id: number;
+  id: string;
   name: string;
   url: string;
 }

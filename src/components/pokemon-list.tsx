@@ -2,7 +2,7 @@ import React from "react";
 
 // Definições de tipos
 interface Pokemon {
-  id: number;
+  id: string;
   name: string;
   url: string;
 }
