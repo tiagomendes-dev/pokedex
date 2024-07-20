@@ -1,3 +1,7 @@
+<div>
+  <a href="https://pokedex-rho-bay-65.vercel.app/">Demonstração</a>
+</div>
+
 <h1 align="center" id="top">Pokedex</h1>
 
 <p align="center">
@@ -9,12 +13,6 @@
 
   <img alt="License" src="https://img.shields.io/github/license/tiagomendes-dev/pokedex?color=56BEB8">
 </p>
-
-<!-- Status -->
-
- <h4 align="center"> 
-	🚧  Pokedex em construção...  🚧
-</h4>
 
 <hr>
 
